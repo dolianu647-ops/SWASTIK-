@@ -1,0 +1,9 @@
+{
+  "name": "swastik-social-platform",
+  "version": "4.0.0",
+  "private": true,
+  "description": "SWASTIK social platform prototype with a Node.js built-in backend",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=20" }
+}
