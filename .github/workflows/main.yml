@@ -1,0 +1,33 @@
+name: Build SWASTIK Android
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.13"
+
+      - name: Build APK and AAB
+        run: |
+          PROJECT_DIR=$(dirname "$(find . -name settings.gradle -print -quit)")
+          cd "$PROJECT_DIR"
+          gradle assembleDebug bundleRelease
+
+      - name: Upload APK and AAB
+        uses: actions/upload-artifact@v4
+        with:
+          name: SWASTIK-Android-Build
+          path: |
+            **/app/build/outputs/apk/debug/*.apk
+            **/app/build/outputs/bundle/release/*.aab
